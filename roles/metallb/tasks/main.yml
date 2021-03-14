@@ -1,0 +1,36 @@
+---
+
+- name: Create metallb-system namespace
+  community.kubernetes.k8s:
+    state: present
+    definition: "{{ lookup('file', 'files/namespace.yaml') }}"
+    wait: true
+
+- name: Generate secretkey for metallb
+  command: openssl rand -base64 128
+  register: command_output
+
+- name: Create metallb memberlist secret
+  community.kubernetes.k8s:
+    state: present
+    definition: 
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: memberlist
+        namespace: metallb-system     
+      data:
+        secretkey: "{{ command_output.stdout }}"
+
+- name: Apply Metallb manifest
+  community.kubernetes.k8s:
+    state: present
+    definition: "{{ lookup('file', 'files/metallb.yaml') }}"
+    wait: true
+
+- name: Apply Metallb configuration
+  community.kubernetes.k8s:
+    state: present
+    definition: "{{ lookup('template', 'template/config.yaml.j2') }}"
+    wait: true
