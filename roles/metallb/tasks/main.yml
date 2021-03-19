@@ -5,12 +5,12 @@
     state: present
     definition: "{{ lookup('file', 'files/namespace.yaml') }}"
 
-- name: Apply Metallb manifest
+- name: Apply MetalLB manifest
   community.kubernetes.k8s:
     state: present
     definition: "{{ lookup('file', 'files/metallb.yaml') }}"
 
-- name: Check if secretkey for metallb exists
+- name: Check if secretkey for MetalLB exists
   community.kubernetes.k8s_info:
     api_version: v1
     kind: Secret
@@ -18,12 +18,12 @@
     namespace: metallb-system
   register: metallb_secret_output
 
-- name: Generate secretkey for metallb
+- name: Generate secretkey for MetalLB
   command: openssl rand -base64 128
   register: command_output
   when: metallb_secret_output['resources'] == []
 
-- name: Create metallb memberlist secret
+- name: Create MetalLB memberlist secret
   community.kubernetes.k8s:
     state: present
     definition: 
@@ -37,7 +37,7 @@
         secretkey: "{{ command_output.stdout }}"
   when: metallb_secret_output['resources'] == []
 
-- name: Apply Metallb configuration
+- name: Apply MetalLB configuration
   community.kubernetes.k8s:
     state: present
     definition: "{{ lookup('template', 'template/config.yaml.j2') }}"
