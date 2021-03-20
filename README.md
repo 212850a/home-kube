@@ -1,5 +1,10 @@
 # home-kube
-Before to run hosts.ini should be defined as example:
+Ansible playbook to deploy the following k3s components which are described on [my blog](http://blog.sozinov.eu):
+* MetalLB
+* NFS-Client
+* Pihole
+
+## Before to run hosts.ini should be defined as example:
 ```
 [master]
 192.168.1.21
@@ -19,8 +24,15 @@ node
 [k3s_cluster:vars]
 ansible_ssh_user=vagrant
 metallb_ip_range="192.168.1.2-192.168.1.10"
+pihole_ip="192.168.8.11"
+nfs_server_ip="192.168.8.20"
+nfs_server_path="/mnt/kubcluster"
 ```
-Example of usage
+## Example of usage
 ```
-ansible-playbook vagrant-kube.yml
+ansible-playbook -i hosts.ini vagrant-kube.yml
+```
+## Remove all roles
+```
+ansible-playbook -i hosts.ini reset.yml
 ```
