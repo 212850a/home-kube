@@ -1,0 +1,23 @@
+alertmanager:
+  enabled: false
+
+prometheus:
+  prometheusSpec:
+    retention: 10d
+    scrapeInterval: 60s
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: nfs-client
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+grafana:
+  enabled: true
+  persistence:
+    enabled: true
+    existingClaim: grafana-nfs-pvc
+  initChownData:
+    enabled: false

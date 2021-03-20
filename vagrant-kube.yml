@@ -4,7 +4,7 @@
   gather_facts: yes
   become: yes
   roles:
-    - role: prepare
+   - role: prepare
 
 - hosts: master
   become: yes
@@ -14,3 +14,4 @@
     - role: metallb
     - role: nfs-subdir-external-provisioner
     - role: pihole
+    - role: prometheus-stack

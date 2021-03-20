@@ -22,3 +22,4 @@
       nfs:
         server: "{{ nfs_server_ip }}"
         path: "{{ nfs_server_path }}"
+    wait: yes

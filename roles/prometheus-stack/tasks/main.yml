@@ -1,0 +1,37 @@
+---
+
+- name: Create monitoring namespace
+  community.kubernetes.k8s:
+    name: monitoring
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Create persisitent volume claim for Grafana
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/grafana-nfs-pvc.yaml.j2'
+
+- name: Create service for Prometheus
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/prometheus-web.yaml.j2'
+
+- name: Create service for Grafana
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/grafana-web.yaml.j2'
+
+- name: Add prometheus-community helm repo
+  community.kubernetes.helm_repository:
+    name: prometheus-community
+    repo_url: "https://prometheus-community.github.io/helm-charts"
+
+- name: Deploy latest version of kube-prometheus-stack helm chart
+  community.kubernetes.helm:
+    name: prometheus
+    chart_ref: prometheus-community/kube-prometheus-stack
+    release_namespace: monitoring
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/kube-prometheus-stack-values.yaml.j2') | from_yaml }}"
+    wait: yes

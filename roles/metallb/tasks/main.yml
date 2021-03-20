@@ -19,7 +19,7 @@
   register: metallb_secret_output
 
 - name: Generate secretkey for MetalLB
-  command: openssl rand -base64 128
+  shell: "openssl rand -base64 128 | base64"
   register: command_output
   when: metallb_secret_output['resources'] == []
 
