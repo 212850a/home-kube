@@ -1,0 +1,31 @@
+---
+
+- name: Create pihole namespace
+  community.kubernetes.k8s:
+    name: pihole
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Update MetalLB configuration with ip-address reserved for Pihole
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/config.yaml.j2'
+
+- name: Create persisitent volume claim for Pihole
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/pihole-nfs-pvc.yaml.j2'
+
+- name: Add mojo2600 helm repo for Pihole
+  community.kubernetes.helm_repository:
+    name: mojo2600
+    repo_url: "https://mojo2600.github.io/pihole-kubernetes"
+
+- name: Deploy latest version of Pihole helm chart
+  community.kubernetes.helm:
+    name: pihole
+    chart_ref: mojo2600/pihole
+    release_namespace: pihole
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/pihole-values.yaml.j2') | from_yaml }}"

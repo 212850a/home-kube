@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: "pihole"
+  name: "pihole-nfs-pvc"
+  annotations:
+    volume.beta.kubernetes.io/storage-class: nfs-client
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "500Mi"

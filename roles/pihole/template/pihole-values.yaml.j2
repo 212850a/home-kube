@@ -1,0 +1,23 @@
+---
+persistentVolumeClaim:
+  enabled: true
+  existingClaim: "pihole-nfs-pvc"
+serviceWeb:
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: pihole-services
+    metallb.universe.tf/allow-shared-ip: pihole-svc
+serviceDns:
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: pihole-services
+    metallb.universe.tf/allow-shared-ip: pihole-svc
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+# If using in the real world, set up admin.existingSecret instead.
+adminPassword: admin
