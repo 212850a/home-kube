@@ -3,6 +3,7 @@ Ansible playbook to deploy the following k3s components which are described on [
 * MetalLB
 * NFS-Client
 * Pihole
+* Prometheus & Grafana (as stack)
 
 ## Before to run hosts.ini should be defined as example:
 ```
