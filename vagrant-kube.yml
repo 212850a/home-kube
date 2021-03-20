@@ -12,5 +12,5 @@
     - K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   roles:
     - role: metallb
-    - role: nfs-client
+    - role: nfs-subdir-external-provisioner
     - role: pihole
