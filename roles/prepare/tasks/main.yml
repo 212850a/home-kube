@@ -5,9 +5,11 @@
 
 - debug: msg="{{ output.stdout }}"
 
-- name: Ensure pip is installed.
+- name: Ensure required packages from apt are installed.
   apt: 
-    name: python-pip
+    name: 
+      - python-pip
+      - nfs-common
     state: present
 
 - name: Ensure k8s python module dependencies are installed.

@@ -40,4 +40,4 @@
 - name: Apply MetalLB configuration
   community.kubernetes.k8s:
     state: present
-    definition: "{{ lookup('template', 'template/config.yaml.j2') }}"
+    template: 'template/config.yaml.j2'
