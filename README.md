@@ -28,6 +28,7 @@ metallb_ip_range="192.168.1.2-192.168.1.10"
 pihole_ip="192.168.8.11"
 nfs_server_ip="192.168.8.20"
 nfs_server_path="/mnt/kubcluster"
+snmp_target_ip="192.168.8.1"
 ```
 ## Example of usage
 ```

@@ -1,0 +1,8 @@
+---
+
+- hosts: master
+  become: yes
+  environment:
+    - K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  roles:
+    - role: reset

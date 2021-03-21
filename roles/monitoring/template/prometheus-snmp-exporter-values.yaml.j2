@@ -1,0 +1,14 @@
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  selector:
+    release: prometheus
+  params:
+    enabled: true
+    conf:
+      module:
+      - if_mib
+      target:
+      - {{ snmp_target_ip }}
+  path: /snmp
+  scrapeTimeout: 10s

@@ -14,4 +14,4 @@
     - role: metallb
     - role: nfs-subdir-external-provisioner
     - role: pihole
-    - role: prometheus-stack
+    - role: monitoring

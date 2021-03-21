@@ -1,0 +1,73 @@
+---
+
+- name: Delete prometheus-snmp-exporter helm chart
+  community.kubernetes.helm:
+    name: snmp-exporter
+    chart_ref: prometheus-community/prometheus-snmp-exporter
+    release_namespace: monitoring
+    release_state: absent
+    wait: yes
+
+- name: Delete kube-prometheus-stack helm chart
+  community.kubernetes.helm:
+    name: prometheus
+    chart_ref: prometheus-community/kube-prometheus-stack
+    release_namespace: monitoring
+    release_state: absent
+    wait: yes
+
+- name: Delete monitoring namespace
+  community.kubernetes.k8s:
+    name: monitoring
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+
+- name: Delete monitoring.coreos.com CDRs
+  community.kubernetes.k8s:
+    name: "{{ item }}"
+    api_version: v1
+    kind: CustomResourceDefinition
+    state: absent
+    wait: yes
+  with_items:
+    - alertmanagerconfigs.monitoring.coreos.com
+    - alertmanagers.monitoring.coreos.com
+    - podmonitors.monitoring.coreos.com
+    - probes.monitoring.coreos.com
+    - prometheuses.monitoring.coreos.com
+    - prometheusrules.monitoring.coreos.com
+    - servicemonitors.monitoring.coreos.com
+    - thanosrulers.monitoring.coreos.com
+
+- name: Delete pihole namespace
+  community.kubernetes.k8s:
+    name: pihole
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+
+- name: Delete storage namespace
+  community.kubernetes.k8s:
+    name: storage
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+
+- name: Delete nfs-client storageclass
+  community.kubernetes.k8s:
+    name: nfs-client
+    api_version: v1
+    kind: StorageClass
+    state: absent
+    wait: yes
+
+- name: Delete metallb-system namespace
+  community.kubernetes.k8s:
+    name: metallb-system
+    api_version: v1
+    kind: Namespace
+    state: absent
