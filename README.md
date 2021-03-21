@@ -32,7 +32,7 @@ snmp_target_ip="192.168.8.1"
 ```
 ## Example of usage
 ```
-ansible-playbook -i hosts.ini vagrant-kube.yml
+ansible-playbook -i hosts.ini home-kube.yml
 ```
 ## Remove all roles
 ```
