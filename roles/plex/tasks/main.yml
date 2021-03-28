@@ -1,0 +1,14 @@
+---
+
+- name: Create plex namespace
+  community.kubernetes.k8s:
+    name: plex
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Create persisitent volume claim for Plex
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/plex-nfs-pvc.yaml.j2'
+
