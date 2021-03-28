@@ -4,6 +4,7 @@ Ansible playbook to deploy the following k3s components which are described on [
 * NFS-Client
 * Pihole
 * Prometheus & Grafana (as stack)
+* Plex
 
 ## Before to run hosts.ini should be defined as example:
 ```
@@ -29,6 +30,7 @@ pihole_ip="192.168.8.11"
 nfs_server_ip="192.168.8.20"
 nfs_server_path="/mnt/kubcluster"
 snmp_target_ip="192.168.8.1"
+plex_data_path="/mnt/data"
 ```
 ## Example of usage
 ```
