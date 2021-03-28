@@ -69,3 +69,8 @@
     grep_cpuinfo_raspberrypi.rc == 0 or grep_device_tree_model_raspberrypi.rc == 0
   tags:
     - prometheus_exporter
+
+- name: Create Grafana Kubernetes Dashboard
+  community.kubernetes.k8s:
+    state: present
+    definition: "{{ lookup('file', 'files/grafana-dashboard-k3s.yaml') }}"
