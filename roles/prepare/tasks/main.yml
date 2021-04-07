@@ -19,15 +19,15 @@
       #- k8s
       #- PyYAML
 
-- name: Add {{ plex_data_path }} to /etc/fstab
+- name: Add plex_nfs_data_path to /etc/fstab
   lineinfile:
     path: /etc/fstab
-    regexp: "^{{ nfs_server_ip }}:{{ plex_data_path }}"
-    line: "{{ nfs_server_ip }}:{{ plex_data_path }}	/mnt/public	nfs	defaults	0	0"
+    regexp: "^{{ nfs_server_ip }}:{{ plex_nfs_data_path }}"
+    line: "{{ nfs_server_ip }}:{{ plex_nfs_data_path }}	{{ plex_local_data_path }}	nfs	defaults	0	0"
 
-- name: Mount {{ plex_data_path }} on all cluster nodes
+- name: Mount plex_nfs_data_path on all cluster nodes
   ansible.posix.mount:
-    src: "{{ nfs_server_ip }}:{{ plex_data_path }}"
-    path: "/mnt/public"
+    src: "{{ nfs_server_ip }}:{{ plex_nfs_data_path }}"
+    path: "{{ plex_local_data_path }}"
     fstype: nfs
     state: mounted

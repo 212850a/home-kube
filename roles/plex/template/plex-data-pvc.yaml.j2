@@ -1,0 +1,13 @@
+piVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: plex
+  name: plex-data-pvc
+spec:
+  accessModes:
+    - ReadOnlyMany
+  volumeName: plex-data-pv
+  resources:
+    requests:
+      storage: 1Ti
+  storageClassName: ""

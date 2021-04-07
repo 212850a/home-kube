@@ -7,8 +7,31 @@
     kind: Namespace
     state: present
 
-- name: Create persisitent volume claim for Plex
+- name: Create persisitent volume claim for Plex Library
   community.kubernetes.k8s:
     state: present
-    template: 'template/plex-nfs-pvc.yaml.j2'
+    template: 'template/plex-config-pvc.yaml.j2'
 
+- name: Create persisitent volume for Plex Data
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/plex-data-pv.yaml.j2'
+
+- name: Create persisitent volume claim for Plex Data
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/plex-data-pvc.yaml.j2'
+
+- name: Add k8s-at-home helm repo for Plex
+  community.kubernetes.helm_repository:
+    name: k8s-at-home
+    repo_url: "https://k8s-at-home.com/charts"
+
+- name: Deploy latest version of Plex helm chart
+  community.kubernetes.helm:
+    name: plex
+    chart_ref: k8s-at-home/plex
+    release_namespace: plex
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/plex-values.yaml.j2') | from_yaml }}"
+    wait: yes

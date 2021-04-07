@@ -1,5 +1,21 @@
 ---
 
+- name: Delete plex helm chart
+  community.kubernetes.helm:
+    name: plex
+    chart_ref: k8s-at-home/plex
+    release_namespace: plex
+    release_state: absent
+    wait: yes
+
+- name: Delete plex namespace
+  community.kubernetes.k8s:
+    name: plex
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+
 - name: Delete prometheus-snmp-exporter helm chart
   community.kubernetes.helm:
     name: snmp-exporter
