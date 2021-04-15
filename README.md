@@ -1,5 +1,5 @@
 # home-kube
-Ansible playbook to deploy the following k3s components which are described on [my blog](http://blog.sozinov.eu):
+Ansible playbook to deploy the following k3s components which are described in the [blog](http://blog.sozinov.eu):
 * MetalLB
 * NFS-Client
 * Pihole

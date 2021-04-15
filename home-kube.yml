@@ -11,8 +11,8 @@
   environment:
     - K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   roles:
-    - role: metallb
-    - role: nfs-subdir-external-provisioner
-    - role: pihole
-    - role: monitoring
-    - role: plex
+    - { role: metallb, tags: 'metallb' }
+    - { role: nfs-subdir-external-provisioner, tags: 'nfs-subdir-external-provisioner' }
+    - { role: pihole, tags: 'pihole' }
+    - { role: monitoring, tags: 'monitoring' }
+    - { role: plex, tags: 'plex' }
