@@ -14,8 +14,6 @@ For Plex nfs_server_ip:plex_nfs_data_path will be added to /etc/fstab on all nod
 ```
 [master]
 192.168.1.21
-
-[additional_master]
 192.168.1.22
 192.168.1.23
 
@@ -24,7 +22,6 @@ For Plex nfs_server_ip:plex_nfs_data_path will be added to /etc/fstab on all nod
 
 [k3s_cluster:children]
 master
-additional_master
 node
 
 [k3s_cluster:vars]
@@ -39,6 +36,7 @@ plex_local_data_path="/mnt/data"
 plex_claim_token="claim-ne3xhadLMsxRpy4567890"
 plex_timezone="Europe/Vilnius"
 ```
+All Kubernetes actions are performed to first defined master, so please ensure it's accessible and working fine.
 ## Example of usage
 ```
 ansible-playbook -i hosts.ini home-kube.yml

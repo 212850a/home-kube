@@ -6,7 +6,7 @@
   roles:
    - role: prepare
 
-- hosts: master
+- hosts: master[0]
   become: yes
   environment:
     - K8S_AUTH_KUBECONFIG: /etc/rancher/k3s/k3s.yaml
