@@ -4,7 +4,7 @@
   gather_facts: yes
   become: yes
   roles:
-   - role: prepare
+   - { role: prepare, tags: 'prepare' }
 
 - hosts: master[0]
   become: yes
