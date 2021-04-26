@@ -70,6 +70,14 @@
   tags:
     - prometheus_exporter
 
+- name: Apply arm_exporter manifest
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/armexporter.yaml.j2'
+  when: raspberry_pi|default(false)
+  tags: 
+    - prometheus_exporter
+
 - name: Create Grafana Kubernetes Dashboard
   community.kubernetes.k8s:
     state: present
