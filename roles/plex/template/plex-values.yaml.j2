@@ -11,29 +11,30 @@ service:
   type: LoadBalancer
   annotations:
     metallb.universe.tf/allow-shared-ip: plex-svc
-  additionalServices:
-   - enabled: true
-     nameSuffix: dnla-tcp
-     type: LoadBalancer
-     annotations:
-       metallb.universe.tf/allow-shared-ip: plex-svc
-     port:
-       port: 32469
-       name: dnla-tcp
-       protocol: TCP
-       targetPort: 32469
-  #   externalTrafficPolicy: Local
-   - enabled: true
-     nameSuffix: dnla-udp
-     type: LoadBalancer
-     annotations:
-       metallb.universe.tf/allow-shared-ip: plex-svc
-     port:
-       port: 1900
-       name: dnla-udp
-       protocol: UDP
-       targetPort: 1900
-  #   externalTrafficPolicy: Local
+  port:
+    port: 80
+    targetPort: 32400
+#  additionalServices:
+#   - enabled: true
+#     nameSuffix: dnla-tcp
+#     type: LoadBalancer
+#     annotations:
+#       metallb.universe.tf/allow-shared-ip: plex-svc
+#     port:
+#       port: 32469
+#       name: dnla-tcp
+#       protocol: TCP
+#       targetPort: 32469
+#   - enabled: true
+#     nameSuffix: dnla-udp
+#     type: LoadBalancer
+#     annotations:
+#       metallb.universe.tf/allow-shared-ip: plex-svc
+#     port:
+#       port: 1900
+#       name: dnla-udp
+#       protocol: UDP
+#       targetPort: 1900
 
 # nodeSelector:
 #   beta.kubernetes.io/arch: arm
