@@ -10,6 +10,8 @@ MetalLB is used as main LoadBalancer for all services. For Pihole ip-address sho
 
 For Plex nfs_server_ip:plex_nfs_data_path will be added to /etc/fstab on all nodes and mounted locally to plex_local_data_path.
 
+Helm should be installed on first defined master manually as per [official guide](https://helm.sh/docs/intro/install/) before to proceed further.
+
 ## Before to run hosts.ini should be defined as example:
 ```
 [master]
@@ -41,6 +43,12 @@ All Kubernetes actions are performed to first defined master, so please ensure i
 ```
 ansible-playbook -i hosts.ini home-kube.yml
 ```
+## Usage of tags
+Each role can be executed separately with a help of tags, like:
+```
+ansible-playbook -i hosts.ini --tags pihole home-kube.yml
+```
+
 ## Remove all roles
 ```
 ansible-playbook -i hosts.ini reset.yml
