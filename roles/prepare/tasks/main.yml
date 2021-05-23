@@ -16,8 +16,6 @@
   pip:
     name:
       - openshift
-      #- k8s
-      #- PyYAML
 
 - name: Add plex_nfs_data_path to /etc/fstab
   lineinfile:
