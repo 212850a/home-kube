@@ -5,6 +5,7 @@ Ansible playbook to deploy the following k3s components which are described in t
 * Pihole
 * Prometheus & Grafana (as stack)
 * Plex
+* Home Assistant
 
 MetalLB is used as main LoadBalancer for all services. For Pihole ip-address should be specified, for all other services (Prometheus, Grafana and Plex) ip-addresses will be taken from defined default MetalLB pool.
 

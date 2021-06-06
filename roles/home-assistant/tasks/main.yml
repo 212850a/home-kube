@@ -1,0 +1,32 @@
+---
+
+- name: Create home-assistant namespace
+  community.kubernetes.k8s:
+    name: home-assistant
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Create persisitent volume claim for Home Assistant
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/home-assistant-pvc.yaml.j2'
+
+- name: Create service for Home Assistant
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/home-assistant-web.yaml.j2'
+
+- name: Add k8s-at-home helm repo for Home Assistant
+  community.kubernetes.helm_repository:
+    name: k8s-at-home
+    repo_url: "https://k8s-at-home.com/charts"
+
+- name: Deploy latest version of Home Assistant helm chart
+  community.kubernetes.helm:
+    name: home-assistant
+    chart_ref: k8s-at-home/home-assistant
+    release_namespace: home-assistant
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/home-assistant-values.yaml.j2') | from_yaml }}"
+    wait: yes
