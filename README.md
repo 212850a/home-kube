@@ -38,6 +38,8 @@ plex_nfs_data_path="/volume/data"
 plex_local_data_path="/mnt/data"
 plex_claim_token="claim-ne3xhadLMsxRpy4567890"
 plex_timezone="Europe/Vilnius"
+plex_ip="192.168.8.22"
+plex_allowed_networks="192.168.8.0/24"
 ```
 All Kubernetes actions are performed to first defined master, so please ensure it's accessible and working fine.
 ## Example of usage
