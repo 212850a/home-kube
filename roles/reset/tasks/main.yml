@@ -1,5 +1,35 @@
 ---
 
+- name: Delete esphome helm chart
+  community.kubernetes.helm:
+    name: esphome
+    chart_ref: k8s-at-home/esphome 
+    release_namespace: home-assistant
+    release_state: absent
+    wait: yes
+  tags:
+    - home-assistant
+
+- name: Delete home-assistant helm chart
+  community.kubernetes.helm:
+    name: home-assistant
+    chart_ref: k8s-at-home/home-assistant
+    release_namespace: home-assistant
+    release_state: absent
+    wait: yes
+  tags:
+    - home-assistant
+
+- name: Delete home-assistant namespace
+  community.kubernetes.k8s:
+    name: home-assistant
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+  tags:
+    - home-assistant
+
 - name: Delete plex helm chart
   community.kubernetes.helm:
     name: plex
@@ -77,6 +107,16 @@
     - thanosrulers.monitoring.coreos.com
   tags:
     - monitoring
+
+- name: Delete pihole helm chart
+  community.kubernetes.helm:
+    name: pihole
+    chart_ref: mojo2600/pihole
+    release_namespace: pihole
+    release_state: absent
+    wait: yes
+  tags:
+    - pihole
 
 - name: Delete pihole namespace
   community.kubernetes.k8s:
