@@ -30,3 +30,22 @@
     update_repo_cache: yes
     values: "{{ lookup('template', 'template/home-assistant-values.yaml.j2') | from_yaml }}"
     wait: yes
+
+- name: Create persisitent volume claim for ESPHome
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/esphome-pvc.yaml.j2'
+
+- name: Create service for ESPHome
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/esphome-web.yaml.j2'
+
+- name: Deploy latest version of ESPHome helm chart
+  community.kubernetes.helm:
+    name: esphome
+    chart_ref: k8s-at-home/esphome
+    release_namespace: home-assistant
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/esphome-values.yaml.j2') | from_yaml }}"
+    wait: yes
