@@ -17,3 +17,4 @@
     - { role: monitoring, tags: 'monitoring' }
     - { role: plex, tags: 'plex' }
     - { role: home-assistant, tags: 'home-assistant' }
+    - { role: minio, tags: 'minio' }
