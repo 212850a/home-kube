@@ -6,6 +6,7 @@ Ansible playbook to deploy the following k3s components which are described in t
 * Prometheus & Grafana (as stack)
 * Plex
 * Home Assistant
+* Minio
 
 MetalLB is used as main LoadBalancer for all services. For Pihole ip-address should be specified, for all other services (Prometheus, Grafana and Plex) ip-addresses will be taken from defined default MetalLB pool.
 
@@ -31,15 +32,32 @@ node
 ansible_ssh_user=vagrant
 metallb_ip_range="192.168.1.2-192.168.1.10"
 pihole_ip="192.168.8.11"
-nfs_server_ip="192.168.8.20"
+nfs_server_ip="192.168.8.19"
 nfs_server_path="/mnt/kubcluster"
 snmp_target_ip="192.168.8.1"
 plex_nfs_data_path="/volume/data"
 plex_local_data_path="/mnt/data"
 plex_claim_token="claim-ne3xhadLMsxRpy4567890"
 plex_timezone="Europe/Vilnius"
-plex_ip="192.168.8.22"
 plex_allowed_networks="192.168.8.0/24"
+minio_access="minio"
+minio_secret="supersecret"
+# ip-addresses reserved for loadbalancer services (should not clash with metallb_ip_range)
+prometheus_ip="192.168.8.20"
+grafana_ip="192.168.8.21"
+plex_ip="192.168.8.22"
+ha_ip="192.168.8.23"
+esphome_ip="192.168.8.24"
+minio_ip="192.168.8.25"
+# if helm chart version is not set the latest will be used
+helm_chart_version_nfs_subdir_external_provisioner="4.0.14"
+helm_chart_version_pihole="1.9.1"
+helm_chart_version_kube_prometheus_stack="16.7.0"
+helm_chart_version_prometheus_snmp_exporter="0.1.5"
+helm_chart_version_plex="5.0.1"
+helm_chart_version_home_assistant="10.0.0"
+helm_chart_version_esphome="8.0.0"
+helm_chart_version_minio="8.0.10"
 ```
 All Kubernetes actions are performed to first defined master, so please ensure it's accessible and working fine.
 ## Example of usage
@@ -56,3 +74,4 @@ ansible-playbook -i hosts.ini --tags pihole home-kube.yml
 ```
 ansible-playbook -i hosts.ini reset.yml
 ```
+Tags for reset playbook can be used either - to remove specific components only.

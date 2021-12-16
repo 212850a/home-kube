@@ -22,10 +22,11 @@
     name: k8s-at-home
     repo_url: "https://k8s-at-home.com/charts"
 
-- name: Deploy latest version of Home Assistant helm chart
+- name: Deploy Home Assistant helm chart
   community.kubernetes.helm:
     name: home-assistant
     chart_ref: k8s-at-home/home-assistant
+    chart_version: "{{ helm_chart_version_home_assistant | default(omit) }}"
     release_namespace: home-assistant
     update_repo_cache: yes
     values: "{{ lookup('template', 'template/home-assistant-values.yaml.j2') | from_yaml }}"
@@ -41,10 +42,11 @@
     state: present
     template: 'template/esphome-web.yaml.j2'
 
-- name: Deploy latest version of ESPHome helm chart
+- name: Deploy ESPHome helm chart
   community.kubernetes.helm:
     name: esphome
     chart_ref: k8s-at-home/esphome
+    chart_version: "{{ helm_chart_version_esphome | default(omit) }}"
     release_namespace: home-assistant
     update_repo_cache: yes
     values: "{{ lookup('template', 'template/esphome-values.yaml.j2') | from_yaml }}"

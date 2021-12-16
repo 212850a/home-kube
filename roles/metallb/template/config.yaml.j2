@@ -10,3 +10,31 @@ data:
       protocol: layer2
       addresses:
       - {{ metallb_ip_range }}
+    - name: pihole_ip
+      protocol: layer2
+      addresses:
+      - {{ pihole_ip }}/32
+    - name: prometheus_ip
+      protocol: layer2
+      addresses:
+      - {{ prometheus_ip }}/32
+    - name: grafana_ip
+      protocol: layer2
+      addresses:
+      - {{ grafana_ip }}/32
+    - name: plex_ip
+      protocol: layer2
+      addresses:
+      - {{ plex_ip }}/32
+    - name: ha_ip
+      protocol: layer2
+      addresses:
+      - {{ ha_ip }}/32
+    - name: esphome_ip
+      protocol: layer2
+      addresses:
+      - {{ esphome_ip }}/32
+    - name: minio_ip
+      protocol: layer2
+      addresses:
+      - {{ minio_ip }}/32

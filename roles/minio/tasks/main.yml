@@ -17,10 +17,11 @@
     name: minio
     repo_url: "https://helm.min.io"
 
-- name: Deploy latest version of Minio helm chart
+- name: Deploy Minio helm chart
   community.kubernetes.helm:
     name: mi
     chart_ref: minio/minio
+    chart_version: "{{ helm_chart_version_minio | default(omit) }}"
     release_namespace: minio
     update_repo_cache: yes
     values: "{{ lookup('template', 'template/minio-values.yaml.j2') | from_yaml }}"

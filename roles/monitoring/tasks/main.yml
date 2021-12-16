@@ -22,24 +22,41 @@
     state: present
     template: 'template/grafana-web.yaml.j2'
 
+- name: Create Object Store Secret (for thanos)
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: thanos
+        namespace: monitoring
+      data:
+        object-store.yaml: "{{ lookup('template', 'template/object-store.yaml.j2' ) | b64encode }}"
+
 - name: Add prometheus-community helm repo
   community.kubernetes.helm_repository:
     name: prometheus-community
     repo_url: "https://prometheus-community.github.io/helm-charts"
 
-- name: Deploy latest version of kube-prometheus-stack helm chart
+- name: Deploy kube-prometheus-stack helm chart
   community.kubernetes.helm:
     name: prometheus
     chart_ref: prometheus-community/kube-prometheus-stack
+    chart_version: "{{ helm_chart_version_kube_prometheus_stack | default(omit) }}"
     release_namespace: monitoring
     update_repo_cache: yes
     values: "{{ lookup('template', 'template/kube-prometheus-stack-values.yaml.j2') | from_yaml }}"
     wait: yes
+    wait_timeout: 10m0s
+    
 
-- name: Deploy latest version of prometheus-snmp-exporter helm chart
+- name: Deploy prometheus-snmp-exporter helm chart
   community.kubernetes.helm:
     name: snmp-exporter
     chart_ref: prometheus-community/prometheus-snmp-exporter
+    chart_version: "{{ helm_chart_version_prometheus_snmp_exporter | default(omit) }}"
     release_namespace: monitoring
     values: "{{ lookup('template', 'template/prometheus-snmp-exporter-values.yaml.j2') | from_yaml }}"
     wait: yes

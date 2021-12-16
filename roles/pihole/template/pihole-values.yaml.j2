@@ -5,13 +5,13 @@ persistentVolumeClaim:
 serviceWeb:
   type: LoadBalancer
   annotations:
-    metallb.universe.tf/address-pool: pihole-services
-    metallb.universe.tf/allow-shared-ip: pihole-svc
+    metallb.universe.tf/address-pool: pihole_ip
+    metallb.universe.tf/allow-shared-ip: pihole_ip
 serviceDns:
   type: LoadBalancer
   annotations:
-    metallb.universe.tf/address-pool: pihole-services
-    metallb.universe.tf/allow-shared-ip: pihole-svc
+    metallb.universe.tf/address-pool: pihole_ip
+    metallb.universe.tf/allow-shared-ip: pihole_ip
 resources:
   limits:
     cpu: 200m

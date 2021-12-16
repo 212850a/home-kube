@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    metallb.universe.tf/address-pool: default
+    metallb.universe.tf/address-pool: grafana_ip
   name: grafana-web
   namespace: monitoring
 spec:

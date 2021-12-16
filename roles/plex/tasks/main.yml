@@ -27,10 +27,11 @@
     name: k8s-at-home
     repo_url: "https://k8s-at-home.com/charts"
 
-- name: Deploy latest version of Plex helm chart
+- name: Deploy Plex helm chart
   community.kubernetes.helm:
     name: plex
     chart_ref: k8s-at-home/plex
+    chart_version: "{{ helm_chart_version_plex | default(omit) }}"
     release_namespace: plex
     update_repo_cache: yes
     values: "{{ lookup('template', 'template/plex-values.yaml.j2') | from_yaml }}"

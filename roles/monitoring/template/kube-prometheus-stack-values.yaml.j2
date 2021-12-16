@@ -13,6 +13,11 @@ prometheus:
           resources:
             requests:
               storage: 5Gi
+#    thanos:
+#      image: raspbernetes/thanos:v0.23.1
+#      objectStorageConfig:
+#        name: thanos
+#        key: object-store.yaml
 
 grafana:
   enabled: true
