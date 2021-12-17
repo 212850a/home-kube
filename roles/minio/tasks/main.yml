@@ -19,7 +19,7 @@
 
 - name: Deploy Minio helm chart
   community.kubernetes.helm:
-    name: mi
+    name: minio
     chart_ref: minio/minio
     chart_version: "{{ helm_chart_version_minio | default(omit) }}"
     release_namespace: minio
