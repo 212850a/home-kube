@@ -14,7 +14,11 @@ secretKey: "{{ minio_secret }}"
 service:
   type: LoadBalancer
   annotations:
+{% if minio_ip is defined %}
     metallb.universe.tf/address-pool: minio_ip
+{% else %}
+    metallb.universe.tf/address-pool: default
+{% endif %}
 #    prometheus.io/scrape: 'true'
 #    prometheus.io/path:   '/minio/prometheus/metrics'
 #    prometheus.io/port:   '9000'

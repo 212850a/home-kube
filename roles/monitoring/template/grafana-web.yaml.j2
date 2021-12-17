@@ -2,7 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
+{% if grafana_ip is defined %}
     metallb.universe.tf/address-pool: grafana_ip
+{% else %}
+    metallb.universe.tf/address-pool: default
+{% endif %}
   name: grafana-web
   namespace: monitoring
 spec:

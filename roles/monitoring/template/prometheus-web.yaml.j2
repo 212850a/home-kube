@@ -2,7 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
+{% if prometheus_ip is defined %}
     metallb.universe.tf/address-pool: prometheus_ip
+{% else %}
+    metallb.universe.tf/address-pool: default
+{% endif %}
   name: prometheus-web
   namespace: monitoring
 spec:
