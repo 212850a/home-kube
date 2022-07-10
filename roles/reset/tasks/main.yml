@@ -1,5 +1,25 @@
 ---
 
+- name: Delete Vaultwarden helm chart
+  community.kubernetes.helm:
+    name: vaultwarden
+    chart_ref: k8s-at-home/vaultwarden
+    release_namespace: vaultwarden
+    release_state: absent
+    wait: yes
+  tags:
+    - vaultwarden
+
+- name: Delete Vaultwarden namespace
+  community.kubernetes.k8s:
+    name: vaultwarden
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+  tags:
+    - vaultwarden
+
 - name: Delete minio helm chart
   community.kubernetes.helm:
     name: minio

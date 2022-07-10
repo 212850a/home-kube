@@ -8,7 +8,7 @@
 - name: Ensure required packages from apt are installed.
   apt: 
     name: 
-      - python-pip
+      - python3-pip
       - nfs-common
     state: present
 
@@ -17,15 +17,15 @@
     name:
       - openshift
 
-- name: Add plex_nfs_data_path to /etc/fstab
-  lineinfile:
-    path: /etc/fstab
-    regexp: "^{{ nfs_server_ip }}:{{ plex_nfs_data_path }}"
-    line: "{{ nfs_server_ip }}:{{ plex_nfs_data_path }}	{{ plex_local_data_path }}	nfs	defaults	0	0"
+#- name: Add plex_nfs_data_path to /etc/fstab
+#  lineinfile:
+#    path: /etc/fstab
+#    regexp: "^{{ nfs_server_ip }}:{{ plex_nfs_data_path }}"
+#    line: "{{ nfs_server_ip }}:{{ plex_nfs_data_path }}	{{ plex_local_data_path }}	nfs	defaults	0	0"
 
-- name: Mount plex_nfs_data_path on all cluster nodes
-  ansible.posix.mount:
-    src: "{{ nfs_server_ip }}:{{ plex_nfs_data_path }}"
-    path: "{{ plex_local_data_path }}"
-    fstype: nfs
-    state: mounted
+#- name: Mount plex_nfs_data_path on all cluster nodes
+#  ansible.posix.mount:
+#    src: "{{ nfs_server_ip }}:{{ plex_nfs_data_path }}"
+#    path: "{{ plex_local_data_path }}"
+#    fstype: nfs
+#    state: mounted

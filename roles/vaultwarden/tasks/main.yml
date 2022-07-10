@@ -1,0 +1,33 @@
+---
+
+- name: Create Vaultwarden namespace
+  community.kubernetes.k8s:
+    name: vaultwarden
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Create persisitent volume claim for Vaultwarden
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/vaultwarden-pvc.yaml.j2'
+
+- name: Add helm repo for Vaultwarden
+  community.kubernetes.helm_repository:
+    name: k8s-at-home
+    repo_url: "https://k8s-at-home.com/charts"
+
+- name: Create service for Vaultwarden
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/vaultwarden-web.yaml.j2'
+
+- name: Deploy Vaultwarden helm chart
+  community.kubernetes.helm:
+    name: vaultwarden
+    chart_ref: k8s-at-home/vaultwarden
+    chart_version: "{{ helm_chart_version_vaultwarden | default(omit) }}"
+    release_namespace: vaultwarden
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/vaultwarden-values.yaml.j2') | from_yaml }}"
+    wait: yes

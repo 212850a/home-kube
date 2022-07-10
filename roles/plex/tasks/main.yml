@@ -1,5 +1,4 @@
 ---
-
 - name: Create plex namespace
   community.kubernetes.k8s:
     name: plex

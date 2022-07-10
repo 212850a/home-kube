@@ -15,6 +15,7 @@
     - { role: nfs-subdir-external-provisioner, tags: 'nfs-subdir-external-provisioner' }
     - { role: pihole, tags: 'pihole' }
     - { role: monitoring, tags: 'monitoring' }
-    - { role: plex, tags: 'plex' }
+#    - { role: plex, tags: 'plex' }
     - { role: home-assistant, tags: 'home-assistant' }
     - { role: minio, tags: 'minio' }
+    - { role: vaultwarden, tags: 'vaultwarden' }
