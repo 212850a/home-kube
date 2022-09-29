@@ -3,12 +3,8 @@ serviceMonitor:
   namespace: monitoring
   selector:
     release: prometheus
-  params:
-    enabled: true
-    conf:
-      module:
-      - if_mib
-      target:
-      - {{ snmp_target_ip }}
+  params: {{ snmp_targets | dict2items(key_name='name', value_name='target')  }}
   path: /snmp
   scrapeTimeout: 10s
+  module:
+    - if_mib
