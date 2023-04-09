@@ -15,9 +15,7 @@ service:
   type: LoadBalancer
   annotations:
 {% if minio_ip is defined %}
-    metallb.universe.tf/address-pool: minio_ip
-{% else %}
-    metallb.universe.tf/address-pool: default
+    metallb.universe.tf/loadBalancerIPs: {{ minio_ip }}
 {% endif %}
 #    prometheus.io/scrape: 'true'
 #    prometheus.io/path:   '/minio/prometheus/metrics'

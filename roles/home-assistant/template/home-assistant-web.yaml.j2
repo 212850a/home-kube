@@ -3,7 +3,7 @@ kind: Service
 metadata:
   annotations:
 {% if ha_ip is defined %}
-    metallb.universe.tf/address-pool: ha_ip
+    metallb.universe.tf/loadBalancerIPs: {{ ha_ip }}
 {% else %}
     metallb.universe.tf/address-pool: default
 {% endif %}    

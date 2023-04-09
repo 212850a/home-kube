@@ -3,9 +3,7 @@ kind: Service
 metadata:
   annotations:
 {% if grafana_ip is defined %}
-    metallb.universe.tf/address-pool: grafana_ip
-{% else %}
-    metallb.universe.tf/address-pool: default
+    metallb.universe.tf/loadBalancerIPs: {{ grafana_ip }}
 {% endif %}
   name: grafana-web
   namespace: monitoring

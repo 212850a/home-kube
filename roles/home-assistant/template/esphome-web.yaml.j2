@@ -3,9 +3,7 @@ kind: Service
 metadata:
   annotations:
 {% if esphome_ip is defined %}
-    metallb.universe.tf/address-pool: esphome_ip
-{% else %}
-    metallb.universe.tf/address-pool: default
+    metallb.universe.tf/loadBalancerIPs: {{ esphome_ip }}
 {% endif %}
   name: esphome-web
   namespace: home-assistant

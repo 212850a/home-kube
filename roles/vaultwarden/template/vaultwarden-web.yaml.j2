@@ -3,9 +3,7 @@ kind: Service
 metadata:
   annotations:
 {% if vaultwarden_ip is defined %}
-    metallb.universe.tf/address-pool: vaultwarden_ip
-{% else %}
-    metallb.universe.tf/address-pool: default
+    metallb.universe.tf/loadBalancerIPs: {{ vaultwarden_ip }}
 {% endif %}    
   name: vaultwarden-web
   namespace: vaultwarden

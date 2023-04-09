@@ -2,42 +2,29 @@
 
 - name: Create metallb-system namespace
   community.kubernetes.k8s:
-    state: present
-    definition: "{{ lookup('file', 'files/namespace.yaml') }}"
-
-- name: Apply MetalLB manifest
-  community.kubernetes.k8s:
-    state: present
-    definition: "{{ lookup('file', 'files/metallb.yaml') }}"
-
-- name: Check if secretkey for MetalLB exists
-  community.kubernetes.k8s_info:
+    name: metallb-system
     api_version: v1
-    kind: Secret
-    name: memberlist
-    namespace: metallb-system
-  register: metallb_secret_output
+    kind: Namespace
+    state: present
 
-- name: Generate secretkey for MetalLB
-  shell: "openssl rand -base64 128 | base64"
-  register: command_output
-  when: metallb_secret_output['resources'] == []
+- name: Add metallb helm repo for minio
+  community.kubernetes.helm_repository:
+    name: metallb
+    repo_url: "https://metallb.github.io/metallb"
 
-- name: Create MetalLB memberlist secret
+- name: Deploy metallb helm chart
+  community.kubernetes.helm:
+    name: metallb
+    chart_ref: metallb/metallb
+    chart_version: "{{ helm_chart_version_metallb | default(omit) }}"
+    release_namespace: metallb-system
+
+- name: Apply MetalLB pool configuration
   community.kubernetes.k8s:
     state: present
-    definition: 
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: memberlist
-        namespace: metallb-system     
-      data:
-        secretkey: "{{ command_output.stdout }}"
-  when: metallb_secret_output['resources'] == []
+    template: 'template/pool.yaml.j2'
 
-- name: Apply MetalLB configuration
+- name: Apply MetalLB L2 Advertisement configuration
   community.kubernetes.k8s:
     state: present
-    template: 'template/config.yaml.j2'
+    template: 'template/l2adv.yaml.j2'
