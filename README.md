@@ -15,6 +15,8 @@ For Plex nfs_server_ip:plex_nfs_data_path will be added to /etc/fstab on all nod
 It is not recommended to use RPi for Plex - practice shows that even RPi 4 does not cope with Plex load.
 In current version of repo all plex related variables and ansible commands are commented out.
 
+For Vaultwarden private key (vw.key) and certificate (vw.crt) files should be manually copied into /config of vaultwarden persistent volume after container is created, then container has to be restarted otherwise https interface won't work.
+
 Helm should be installed on first defined master manually as per [official guide](https://helm.sh/docs/intro/install/) before to proceed further.
 
 ## Before to run hosts.ini should be defined as example:
@@ -52,6 +54,7 @@ pihole_ip="192.168.8.11"
 # ha_ip="192.168.8.23"
 # esphome_ip="192.168.8.24"
 minio_ip="192.168.8.25"
+vaultwarden_ip="192.168.8.26"
 # if helm chart version is not set the latest will be used
 helm_chart_version_nfs_subdir_external_provisioner="4.0.14"
 helm_chart_version_pihole="1.9.1"
