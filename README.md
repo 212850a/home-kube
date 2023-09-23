@@ -39,6 +39,9 @@ metallb_ip_range="192.168.8.2-192.168.8.10"
 nfs_server_ip="192.168.8.19"
 nfs_server_path="/mnt/kubcluster"
 snmp_targets={'router1': '192.168.8.1', 'router2': '192.168.8.2'}
+icmp_targets={'router1': '192.168.8.1', 'router2': '192.168.8.2'}
+http_targets={'google.com': 'https://www.google.com', 'amazon.de': 'https://www.amazon.de'}
+prometheus_ip="192.168.8.20"
 # plex_nfs_data_path="/volume/data"
 # plex_local_data_path="/mnt/data"
 # plex_claim_token="claim-ne3xhadLMsxRpy4567890"
@@ -56,17 +59,19 @@ pihole_ip="192.168.8.11"
 minio_ip="192.168.8.25"
 vaultwarden_ip="192.168.8.26"
 # if helm chart version is not set the latest will be used
+helm_chart_version_metallb="0.13.9"
 helm_chart_version_nfs_subdir_external_provisioner="4.0.14"
 helm_chart_version_pihole="1.9.1"
 helm_chart_version_kube_prometheus_stack="16.7.0"
-helm_chart_version_prometheus_snmp_exporter="0.1.5"
-# helm_chart_version_plex="5.0.1"
-helm_chart_version_home_assistant="10.0.0"
-helm_chart_version_esphome="8.0.0"
+helm_chart_version_prometheus_snmp_exporter="1.1.0"
+helm_chart_version_prometheus_blackbox_exporter="8.2.0"
+helm_chart_version_home_assistant="13.4.2"
+helm_chart_version_esphome="8.4.2"
 helm_chart_version_minio="8.0.10"
 helm_chart_version_vaultwarden="5.0.0"
-```
+
 All Kubernetes actions are performed to first defined master, so please ensure it's accessible and working fine.
+
 ## Example of usage
 ```
 ansible-playbook -i hosts.ini home-kube.yml

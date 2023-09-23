@@ -63,6 +63,17 @@
   tags:
     - prometheus_exporter
 
+- name: Deploy prometheus-blackbox-exporter helm chart
+  community.kubernetes.helm:
+    name: blackbox-exporter
+    chart_ref: prometheus-community/prometheus-blackbox-exporter
+    chart_version: "{{ helm_chart_version_prometheus_blackbox_exporter | default(omit) }}"
+    release_namespace: monitoring
+    values: "{{ lookup('template', 'template/prometheus-blackbox-exporter-values.yaml.j2') | from_yaml }}"
+    wait: yes
+  tags:
+    - prometheus_exporter
+
 - name: Test for raspberry pi /proc/cpuinfo
   command: grep -E "Raspberry Pi|BCM2708|BCM2709|BCM2835|BCM2836" /proc/cpuinfo
   register: grep_cpuinfo_raspberrypi
