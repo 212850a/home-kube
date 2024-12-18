@@ -1,0 +1,17 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  addresses:
+  - {{ metallb_ip_range }}
+
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: pihole
+  namespace: metallb-system
+spec:
+  addresses:
+  - {{ pihole_ip }}/32

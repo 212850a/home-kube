@@ -10,12 +10,13 @@
     name: 
       - python3-pip
       - nfs-common
+      - python3-openshift
     state: present
 
-- name: Ensure k8s python module dependencies are installed.
-  pip:
-    name:
-      - openshift
+#- name: Ensure k8s python module dependencies are installed.
+#  pip:
+#    name:
+#      - openshift
 
 #- name: Add plex_nfs_data_path to /etc/fstab
 #  lineinfile:
