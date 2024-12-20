@@ -1,0 +1,33 @@
+---
+
+- name: Create esphome namespace
+  community.kubernetes.k8s:
+    name: esphome
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Add k8s-at-home helm repo for ESP Home
+  community.kubernetes.helm_repository:
+    name: k8s-at-home
+    repo_url: "https://k8s-at-home.com/charts"
+
+- name: Create persisitent volume claim for ESPHome
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/esphome-pvc.yaml.j2'
+
+- name: Create service for ESPHome
+  community.kubernetes.k8s:
+    state: present
+    template: 'template/esphome-web.yaml.j2'
+
+- name: Deploy ESPHome helm chart
+  community.kubernetes.helm:
+    name: esphome
+    chart_ref: k8s-at-home/esphome
+    chart_version: "{{ helm_chart_version_esphome | default(omit) }}"
+    release_namespace: esphome
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/esphome-values.yaml.j2') | from_yaml }}"
+    wait: yes

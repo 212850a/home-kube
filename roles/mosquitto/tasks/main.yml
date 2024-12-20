@@ -1,0 +1,23 @@
+---
+
+- name: Create mqtt namespace
+  community.kubernetes.k8s:
+    name: mqtt
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Add k8s-at-home helm repo for Mosquitto
+  community.kubernetes.helm_repository:
+    name: k8s-at-home
+    repo_url: "https://k8s-at-home.com/charts"
+
+- name: Deploy Mosquitto helm chart
+  community.kubernetes.helm:
+    name: mosquitto
+    chart_ref: k8s-at-home/mosquitto
+    chart_version: "{{ helm_chart_version_esphome | default(omit) }}"
+    release_namespace: mqtt
+    update_repo_cache: yes
+    values: "{{ lookup('template', 'template/mosquitto-values.yaml.j2') | from_yaml }}"
+    wait: yes

@@ -17,5 +17,7 @@
     - { role: monitoring, tags: 'monitoring' }
 #    - { role: plex, tags: 'plex' }
     - { role: home-assistant, tags: 'home-assistant' }
+    - { role: esphome, tags: 'esphome' }
+    - { role: mosquitto, tags: 'mosquitto' }
     - { role: minio, tags: 'minio' }
     - { role: vaultwarden, tags: 'vaultwarden' }

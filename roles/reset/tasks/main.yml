@@ -40,15 +40,45 @@
   tags:
     - minio
 
+- name: Delete mosquitto helm chart
+  community.kubernetes.helm:
+    name: mosquitto
+    chart_ref: k8s-at-home/mosquitto
+    release_namespace: mqtt
+    release_state: absent
+    wait: yes
+  tags:
+    - mosquitto
+
+- name: Delete mqtt namespace
+  community.kubernetes.k8s:
+    name: mqtt
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+  tags:
+    - mosquitto
+
 - name: Delete esphome helm chart
   community.kubernetes.helm:
     name: esphome
     chart_ref: k8s-at-home/esphome 
-    release_namespace: home-assistant
+    release_namespace: esphome
     release_state: absent
     wait: yes
   tags:
-    - home-assistant
+    - esphome
+
+- name: Delete esphome namespace
+  community.kubernetes.k8s:
+    name: esphome
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: yes
+  tags:
+    - esphome
 
 - name: Delete home-assistant helm chart
   community.kubernetes.helm:
