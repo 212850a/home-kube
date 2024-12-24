@@ -1,0 +1,29 @@
+podSecurityContext:
+  sysctls:
+  - name: net.ipv4.ping_group_range
+    value: "0 65536"
+config:
+  modules:
+    icmp:
+      prober: icmp
+      icmp:
+        preferred_ip_protocol: "ip4"
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  defaults:
+    labels:
+      release: prometheus
+    interval: 30s
+    scrapeTimeout: 30s
+  targets:
+{% for item in icmp_targets %} 
+    - name: {{ item }}
+      url: {{ icmp_targets[item] }}
+      module: icmp
+{% endfor %}
+{% for item in http_targets %}
+    - name: {{ item }}
+      url: {{ http_targets[item] }}
+      module: http_2xx
+{% endfor %}
